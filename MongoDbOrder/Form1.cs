@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MongoDbOrder.Entities;
+using MongoDbOrder.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +17,34 @@ namespace MongoDbOrder
         public Form1()
         {
             InitializeComponent();
+        }
+        OrderOperation orderOperation = new OrderOperation();
+
+        private void btnCreate_Click_1(object sender, EventArgs e)
+        {
+            var order = new Order
+            {
+                City = txtCity.Text,
+                CustomerName = txtCustomer.Text,
+                District = txtDistrict.Text,
+                TotalPrice = decimal.Parse( txtTotalPrice.Text),
+            };
+            orderOperation.AddOrder(order);
+            MessageBox.Show("Ekleme İşlemi Tamamlandı.");
+        }
+
+        private void btnList_Click(object sender, EventArgs e)
+        {
+            List<Order> orders = orderOperation.GetAllOrders();
+            dataGridView1.DataSource = orders;
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            string orderId = txtId.Text;
+            orderOperation.DeleteOrder(orderId);
+            MessageBox.Show("Kullanıcı Silindi.");
+
         }
     }
 }
