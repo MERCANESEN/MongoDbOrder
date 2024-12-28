@@ -46,5 +46,27 @@ namespace MongoDbOrder
             MessageBox.Show("Kullanıcı Silindi.");
 
         }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            string id = txtId.Text;
+            var updateorder = new Order
+            {
+                City = txtCity.Text,
+                CustomerName = txtCustomer.Text,
+                District = txtDistrict.Text,
+                OrderId = id,
+                TotalPrice = decimal.Parse(txtTotalPrice.Text),
+
+            };
+            orderOperation.UpdateOrder(updateorder);
+        }
+
+        private void btnGetById_Click(object sender, EventArgs e)
+        {
+            string id = txtId.Text;
+            Order orders = orderOperation.GetOrderById(id);
+            dataGridView1.DataSource = new List<Order> { orders };
+        }
     }
 }

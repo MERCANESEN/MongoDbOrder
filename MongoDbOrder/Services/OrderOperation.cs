@@ -37,12 +37,11 @@ namespace MongoDbOrder.Services
             {
                 orderList.Add(new Order
                 {
-                    
-                    CustomerName = order["CustomerName"].ToString(),
-                    City = order[" City"].ToString(),
-                    District = order["District"].ToString(),
-                    OrderId = order["_id"].ToString(),
-                    TotalPrice = decimal.Parse(order["TotalPrice"].ToString())
+                    CustomerName = order["CustomerName"]?.ToString() ?? "Default Name",
+                    City = order["City"]?.ToString() ?? "Default City",
+                    District = order["District"]?.ToString() ?? "Default District",
+                    OrderId = order["_id"]?.ToString() ?? "Default ID",
+                    TotalPrice = decimal.TryParse(order["TotalPrice"]?.ToString(), out var totalPrice) ? totalPrice : 0m
                 });
             }
             return orderList;
